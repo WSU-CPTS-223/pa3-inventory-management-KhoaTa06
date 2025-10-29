@@ -1,10 +1,20 @@
-out: clean compile execute
+# Compliler
+CXX = g++
+CXXFLAGS = -Wall -Wextra -std=c++11 -g
 
-compile: main.cpp
-	g++ -g -Wall -std=c++14 main.cpp -o mainexe
+TARGET = main
 
-execute: mainexe
-	./mainexe
+SOURCE = main.cpp parser.cpp product.cpp 
 
+# Rule to build the executable
+$(TARGET): $(SOURCE)
+	$(CXX) $(CXXFLAGS) $(SOURCE) -o $(TARGET)
+
+# Clean rule
 clean:
-	rm -f mainexe
+	rm -f $(OBJS) $(TARGET)
+
+# Test
+test: tests.cpp tests.hpp hash_table.hpp
+	$(CXX) $(CXXFLAGS) -o tests tests.cpp
+	./tests
